@@ -5,7 +5,7 @@ services:
     container_name: shinobi
     restart: always
     ports:
-      - "9015:8080"
+      - "9016:8080"
     environment:
       # - 'APP_BRANCH=dev'
       - TZ=America/Maceio
