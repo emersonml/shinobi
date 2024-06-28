@@ -1,0 +1,36 @@
+
+services:
+  shinobi:
+    image: shinobisystems/shinobi
+    container_name: shinobi
+    restart: always
+    ports:
+      - "9015:8080"
+    environment:
+      # - 'APP_BRANCH=dev'
+      - TZ=America/Maceio
+      # - PLUGINKEY_DeepStack-Object=1234567890  # Substitua pela sua apiKey real
+    # depends_on:
+    #   - deepstack
+    volumes:
+      - /dev/shm/shinobiStreams:/dev/shm/streams
+      - /srv/volumes/shinobi/config:/config
+      - /srv/volumes/shinobi/customautoload:/customAutoLoad
+      - /srv/volumes/shinobi/database:/var/lib/mysql
+      - /srv/volumes/shinobi/videos:/opt/shinobi/videos
+  
+  # deepstack:
+  #   image: deepquestai/deepstack:latest
+  #   container_name: deepstack
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - VISION-DETECTION=True
+  #     - VISION-FACE=True
+  #     - VISION-SCENE=True
+  #     - TZ=America/Mac876470c2f4f8eio
+  #     - API_KEY=1234567890
+  #   volumes:
+  #     - /srv/volumes/shinobi/deepstack/storage:/datastore
+
