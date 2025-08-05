@@ -1,8 +1,8 @@
 
 services:
-  shinobi:
+  app:
     image: shinobisystems/shinobi
-    container_name: shinobi
+    hostname: shinobi
     restart: always
     ports:
       - "9016:8080"
