@@ -1,0 +1,22 @@
+Outras "Opções Ideais" ou Boas Práticas que Vale a Mencionar:
+1. Para Gravação Contínua (Recording)
+Se você também planeja fazer gravação contínua 24/7, o ideal é:
+
+Não usar o mesmo processo FFmpeg para visualização e gravação.
+
+Ativar a gravação direta (Direct-to-Disk): Isso faz o Shinobi salvar o stream original (-c:v copy) diretamente em um arquivo (.mp4, .mkv) sem retranscodificar, consumindo quase zero de CPU. A visualização (Poseidon) seria um processo separado que "bifurca" (split) do mesmo stream de entrada.
+
+2. Ajuste de Performance do Servidor
+Memória Shared (/dev/shm): Você já notou que o HLS era gerado em /dev/shm/streams/. Isso é ótimo, pois é um filesystem em RAM. Isso reduz desgaste do disco SSD e é muito mais rápido. Garanta que você tem RAM suficiente para isso.
+
+CPU Governor: Se seu servidor é dedicado, ajuste o "governador" da CPU para performance para evitar throttling.
+
+3. Configuração do NGINX RTMP
+Buffer Suave (Smooth Buffer): No servidor NGINX RTMP, você pode adicionar a diretiva smooth on; dentro do bloco application stream { ... }. Isso ajuda a suavizar flutuações na taxa de bits da câmera, prevenindo quebras no player.
+
+4. Para Múltiplas Câmeras
+Balanceamento de CPU: Se tiver muitas câmeras, distribua os processos FFmpeg de visualização (Poseidon) e gravação entre diferentes núcleos de CPU usando taskset ou nice nas opções avançadas.
+
+5. Monitoramento
+Health Checks Scripts: Crie um script simples que use ffprobe periodicamente no endereço rtmp://192.168.0.115:1936/stream/admin_cam1_abc para verificar se o stream está ativo e alertar se cair.
+
